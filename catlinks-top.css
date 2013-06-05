@@ -1,0 +1,20 @@
+/* Remove excess line break in $wgCategoryViewer */
+.catlinks br {
+	display: none;
+}
+/* Categories above the content */
+#catlinks-top {
+	float: left;
+}
+#catlinks-top .catlinks {
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-right: 0;
+	margin: 0;
+}
+/* Align filetoc with top category links */
+ul#filetoc {
+	font-size: 100%;
+	line-height: 1.35em;
+	padding: 0.3em 0;
+}
