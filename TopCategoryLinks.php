@@ -52,6 +52,7 @@ function efTopCatlinksBeforePageDisplay($out, $skin)
     }
     else
     {
+        global $wgExtensionAssetsPath;
         // Don't use ResourceLoader on unpatched MediaWiki!
         // It's DYNAMICALLY LOADING CSS which leads to flash-of-unstyled-top-catlinks! :(
         $out->addHeadItem('catlinks-top', '<link rel="stylesheet" type="text/css" href="'.$wgExtensionAssetsPath.'/TopCategoryLinks/catlinks-top.css" />');
