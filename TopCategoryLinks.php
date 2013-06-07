@@ -41,22 +41,13 @@ $wgResourceModules['ext.TopCatlinks'] = array(
     'localBasePath' => __DIR__,
     'remoteExtPath' => 'TopCategoryLinks',
     'styles' => 'catlinks-top.css',
+    'position' => 'top',
 );
 
 function efTopCatlinksBeforePageDisplay($out, $skin)
 {
-    if (defined('GOOD_RESOURCELOADER'))
-    {
-        // GOOD_RESOURCELOADER is a simple patch which doesn't load css dynamically
-        $out->addModules('ext.TopCatlinks');
-    }
-    else
-    {
-        global $wgExtensionAssetsPath;
-        // Don't use ResourceLoader on unpatched MediaWiki!
-        // It's DYNAMICALLY LOADING CSS which leads to flash-of-unstyled-top-catlinks! :(
-        $out->addHeadItem('catlinks-top', '<link rel="stylesheet" type="text/css" href="'.$wgExtensionAssetsPath.'/TopCategoryLinks/catlinks-top.css" />');
-    }
+    // position=top is sufficient to remove style flickering, but we also do addModuleStyles
+    $out->addModuleStyles('ext.TopCatlinks');
     return true;
 }
 
