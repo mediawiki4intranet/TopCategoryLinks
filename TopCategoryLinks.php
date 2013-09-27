@@ -60,10 +60,12 @@ function efDiffClearFloats($diff, $old, $new)
 
 function efAddTopCatlinks($skin, $tpl)
 {
+    global $wgVersion;
     $l = $tpl->data['catlinks'];
     // Strip out $wgCategoryViewer if it's enabled
     $l = preg_replace('#</div>\s*<br[\s/]*>\s*<hr[\s/]*>.*</div>#is', '</div></div>', $l);
-    $tpl->data['bodytext'] = '<div id="catlinks-top">' . $l . '</div>' . $tpl->data['bodytext'];
+    $class = version_compare($wgVersion, '1.19', '>=') ? '' : ' class="mw18"';
+    $tpl->data['bodytext'] = '<div id="catlinks-top"' . $class . '>' . $l . '</div>' . $tpl->data['bodytext'];
     return true;
 }
 
