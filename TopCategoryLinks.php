@@ -44,10 +44,17 @@ $wgResourceModules['ext.TopCatlinks'] = array(
     'position' => 'top',
 );
 
+// Set to false to disable this extension
+$wgCatlinksTop = true;
+
 function efTopCatlinksBeforePageDisplay($out, $skin)
 {
-    // position=top is sufficient to remove style flickering, but we also do addModuleStyles
-    $out->addModuleStyles('ext.TopCatlinks');
+    global $wgCatlinksTop;
+    if ($wgCatlinksTop)
+    {
+        // position=top is sufficient to remove style flickering
+        $out->addModuleStyles('ext.TopCatlinks');
+    }
     return true;
 }
 
@@ -60,12 +67,15 @@ function efDiffClearFloats($diff, $old, $new)
 
 function efAddTopCatlinks($skin, $tpl)
 {
-    global $wgVersion;
-    $l = $tpl->data['catlinks'];
-    // Strip out $wgCategoryViewer if it's enabled
-    $l = preg_replace('#</div>\s*<br[\s/]*>\s*<hr[\s/]*>.*</div>#is', '</div></div>', $l);
-    $class = version_compare($wgVersion, '1.19', '>=') ? '' : ' class="mw18"';
-    $tpl->data['bodytext'] = '<div id="catlinks-top"' . $class . '>' . $l . '</div>' . $tpl->data['bodytext'];
+    global $wgVersion, $wgCatlinksTop;
+    if ($wgCatlinksTop)
+    {
+        $l = $tpl->data['catlinks'];
+        // Strip out $wgCategoryViewer if it's enabled
+        $l = preg_replace('#</div>\s*<br[\s/]*>\s*<hr[\s/]*>.*</div>#is', '</div></div>', $l);
+        $class = version_compare($wgVersion, '1.19', '>=') ? '' : ' class="mw18"';
+        $tpl->data['bodytext'] = '<div id="catlinks-top"' . $class . '>' . $l . '</div>' . $tpl->data['bodytext'];
+    }
     return true;
 }
 
